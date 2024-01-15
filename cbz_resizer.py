@@ -1,6 +1,7 @@
 import os
 import sys
 import zipfile
+import rarfile
 from PIL import Image
 import shutil
 from pathlib import Path
@@ -20,10 +21,7 @@ def update_progress_bar(total_images, processed_images):
     """ Aggiorna la barra di progresso della compressione delle immagini. """
     progress = processed_images / total_images * 20
     sys.stdout.write('\r')
-    #sys.stdout.write(f"[{'='*int(progress)}] {processed_images / total_images * 100:.2f}%") # Barra di progresso che visualizza una barra di avanzamento più precisa con una percentuale formattata a due decimali.
-    #sys.stdout.write("[%-20s] %d%%" % ('='*int(progress), processed_images / total_images * 100)) # Barra di avanzamento che riempie esattamente lo spazio di 20 caratteri, rendendo più chiaro visivamente quando il progresso ha raggiunto il 100%.
-    sys.stdout.write(f"[{'='*int(progress)}{' '*(20-int(progress))}] {processed_images / total_images * 100:.2f}%") # Barra di progresso che riempie esattamente 20 caratteri, con percentuale di avanzamento formattata a due decimali
-
+    sys.stdout.write(f"[{'='*int(progress)}{' '*(20-int(progress))}] {processed_images / total_images * 100:.2f}%")
     sys.stdout.flush()
 
 def compress_image(image_path, resize_factor):
@@ -36,17 +34,28 @@ def compress_image(image_path, resize_factor):
         resized_image.save(image_path)
     return original_width, original_height, new_width, new_height
 
-def compress_cbz(input_cbz, output_cbz, compression_percentage):
-    """ Comprime un file CBZ ridimensionando le immagini al suo interno. """
+def extract_comic_book(input_file, temp_folder):
+    """ Estrae il contenuto di un file CBZ o CBR. """
+    if input_file.suffix.lower() == '.cbz':
+        with zipfile.ZipFile(input_file, 'r') as comic_file:
+            comic_file.extractall(temp_folder)
+    elif input_file.suffix.lower() == '.cbr':
+        with rarfile.RarFile(input_file, 'r') as comic_file:
+            comic_file.extractall(temp_folder)
+    else:
+        raise ValueError("Formato file non supportato.")
+
+def compress_comic_book(input_file, output_file, compression_percentage):
+    """ Comprime un file di fumetti (CBZ o CBR) ridimensionando le immagini al suo interno e crea un nuovo CBZ. """
     temp_folder = Path('temp_folder')
     temp_folder.mkdir(exist_ok=True)
 
-    with zipfile.ZipFile(input_cbz, 'r') as cbz_file:
-        cbz_file.extractall(temp_folder, members=[f for f in cbz_file.infolist() if not f.filename.startswith('__MACOSX')])
+    extract_comic_book(input_file, temp_folder)
 
     image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']
     images = list(temp_folder.glob('**/*'))
-    images = [img for img in images if img.suffix.lower() in image_extensions]
+    # Filtra i file che iniziano con '._' e i file che non sono immagini
+    images = [img for img in images if img.suffix.lower() in image_extensions and not img.name.startswith('._')]
     total_images = len(images)
     processed_images = 0
 
@@ -62,19 +71,20 @@ def compress_cbz(input_cbz, output_cbz, compression_percentage):
         processed_images += 1
         update_progress_bar(total_images, processed_images)
 
-    with zipfile.ZipFile(output_cbz, 'w', zipfile.ZIP_DEFLATED) as new_cbz:
+    with zipfile.ZipFile(output_file, 'w', zipfile.ZIP_DEFLATED) as new_comic:
         for file in temp_folder.rglob('*'):
-            new_cbz.write(file, file.relative_to(temp_folder))
+            if file.is_file():
+                new_comic.write(file, file.relative_to(temp_folder))
 
-    if output_cbz.exists():
+    if output_file.exists():
         remove_temp_folder(temp_folder)
 
-    print_size_info(input_cbz, output_cbz, last_original_width, last_original_height, last_new_width, last_new_height, compression_percentage)
+    print_size_info(input_file, output_file, last_original_width, last_original_height, last_new_width, last_new_height, compression_percentage)
 
-def print_size_info(input_cbz, output_cbz, original_width, original_height, new_width, new_height, compression_percentage):
-    """ Stampa le informazioni sulla dimensione originale e compressa del file CBZ. """
-    original_file_size_mb = get_file_size_mb(input_cbz)
-    new_file_size_mb = get_file_size_mb(output_cbz)
+def print_size_info(input_file, output_file, original_width, original_height, new_width, new_height, compression_percentage):
+    """ Stampa le informazioni sulla dimensione originale e compressa del file di fumetti. """
+    original_file_size_mb = get_file_size_mb(input_file)
+    new_file_size_mb = get_file_size_mb(output_file)
     print("\nRisoluzione".ljust(40) + "Dimensioni".rjust(30))
     print("=" * 70)
     print(f"Originale: {original_width}x{original_height}".ljust(40) + f"{original_file_size_mb:.2f} MB".rjust(30))
@@ -83,12 +93,13 @@ def print_size_info(input_cbz, output_cbz, original_width, original_height, new_
     print("-" * 70)
 
 def main():
+    """ Funzione principale che gestisce l'input dell'utente e avvia il processo di compressione. """
     if len(sys.argv) < 2 or len(sys.argv) > 3:
-        print("Usage: python3 cbz_resizer.py input.cbz [compression_percentage]")
+        print("Usage: python3 comic_resizer.py input_file [compression_percentage]")
         sys.exit(1)
 
-    input_cbz = Path(sys.argv[1])
-    output_cbz = input_cbz.with_name(f"{input_cbz.stem}_resize{input_cbz.suffix}")
+    input_file = Path(sys.argv[1])
+    output_file = input_file.with_name(f"{input_file.stem}_resize.cbz")
 
     compression_percentage = 50
     if len(sys.argv) == 3:
@@ -100,7 +111,7 @@ def main():
             print("La percentuale di compressione deve essere un numero tra 0 e 100.")
             sys.exit(1)
 
-    compress_cbz(input_cbz, output_cbz, compression_percentage)
+    compress_comic_book(input_file, output_file, compression_percentage)
 
 if __name__ == '__main__':
     main()
