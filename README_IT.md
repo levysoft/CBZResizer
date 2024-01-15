@@ -1,17 +1,19 @@
 # CBZ Resizer
-Script Python per ridimensionare in modo efficiente le immagini all'interno dei file CBZ con impostazioni di compressione personalizzabili
+Script Python per ridimensionare efficientemente le immagini all'interno dei file CBZ con impostazioni di compressione personalizzabili, con supporto in sola lettura per i file CBR.
 
 ## Descrizione
-CBZ Resizer è uno script Python progettato per ridimensionare le immagini all'interno di file CBZ. L'utente può specificare una percentuale di compressione per ridurre le dimensioni delle immagini, influenzando così la dimensione complessiva del file CBZ.
+CBZ Resizer è uno script Python sviluppato per ridimensionare le immagini all'interno dei file CBZ. Gli utenti possono specificare una percentuale di compressione per ridurre le dimensioni delle immagini, influenzando così la dimensione complessiva del file CBZ. Offre anche supporto in sola lettura per i file CBR a causa della limitazione della libreria rarfile, che è una libreria in sola lettura. Data questa limitazione e la focalizzazione primaria dello script sui file CBZ, il nome del progetto rimane "CBZ Resizer". Per i file CBR, lo script può decomprimere l'archivio RAR, ridimensionare le immagini come richiesto e ripacchettarle in un nuovo file CBZ.
 
 ## Funzionalità
 - Ridimensionamento delle immagini in un file CBZ
+- Supporto in sola lettura per i file CBR: decomprime i file CBR, ridimensiona le immagini e li converte in file CBZ
 - Percentuale di compressione personalizzabile
 - Output automatico con suffisso "_resize"
 
 ## Requisiti
 - Python 3.x
 - PIL (Python Imaging Library), installabile tramite `pip install Pillow`
+- rarfile, installabile tramite `pip install rarfile` (necessario per il supporto CBR)
 
 ## Installazione
 Per configurare l'ambiente di sviluppo:
@@ -46,9 +48,9 @@ pip install -r requirements.txt
 ## Utilizzo
 Per utilizzare lo script, eseguire il comando:
 
-python3 cbz_resizer.py input.cbz [compression_percentage]
+python3 cbz_resizer.py input_file [compression_percentage]
 
-Dove `input.cbz` è il file CBZ da comprimere e `compression_percentage` è un valore opzionale che indica la percentuale di compressione (da 0 a 100, default 50%).
+Dove `input_file` è il file CBZ o CBR da comprimere e `compression_percentage` è un valore opzionale che indica la percentuale di compressione (da 0 a 100, default 50%).
 
 ## Contributing
 Le contribuzioni sono sempre benvenute! Per contribuire al progetto, per favore segui questi passaggi:
