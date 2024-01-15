@@ -52,6 +52,9 @@ python3 cbz_resizer.py input_file [compression_percentage]
 
 Dove `input_file` è il file CBZ o CBR da comprimere e `compression_percentage` è un valore opzionale che indica la percentuale di compressione (da 0 a 100, default 50%).
 
+## File di Esempio per Test
+Se hai bisogno di file CBZ o CBR di esempio per testare lo script CBZ Resizer, puoi scaricare file pre-costruiti dal seguente link: https://github.com/clach04/sample_reading_media/releases/. Questi file possono essere utili per testare le funzionalità di ridimensionamento e conversione dello script senza la necessità di utilizzare file di grandi dimensioni.
+
 ## Contributing
 Le contribuzioni sono sempre benvenute! Per contribuire al progetto, per favore segui questi passaggi:
 
