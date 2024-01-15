@@ -1,17 +1,19 @@
 # CBZ Resizer
-Python script for efficiently resizing images within CBZ files with customizable compression settings
+Python script for efficiently resizing images within CBZ files with customizable compression settings, featuring added read-only support for CBR files
 
 ## Description
-CBZ Resizer is a Python script designed to resize images within CBZ files. Users can specify a compression percentage to reduce image sizes, thus affecting the overall size of the CBZ file.
+CBZ Resizer is a Python script developed to resize images within CBZ files. Users can specify a compression percentage to reduce image sizes, thus affecting the overall size of the CBZ file. It also offers read-only support for CBR files due to the rarfile library's limitation, which is a read-only library. Given this limitation and the script's primary focus on CBZ files, the project name remains "CBZ Resizer". For CBR files, the script can decompress the RAR archive, resize the images as required, and repack them into a new CBZ file.
 
 ## Features
 - Resizes images within a CBZ file
+- Read-only support for CBR files: decompresses CBR, resizes images, and converts to CBZ
 - Customizable compression percentage
 - Automatic output with "_resize" suffix
 
 ## Requirements
 - Python 3.x
 - PIL (Python Imaging Library), installable via `pip install Pillow`
+- rarfile, installable via pip install rarfile (needed for CBR support)
 
 ## Installation
 To set up the development environment:
@@ -45,9 +47,9 @@ To set up the development environment:
 ## Usage
 To use the script, run the command:
 
-`python3 cbz_resizer.py input.cbz [compression_percentage]`
+`python3 cbz_resizer.py input_file [compression_percentage]`
 
-Where `input.cbz` is the CBZ file to be compressed and `compression_percentage` is an optional value indicating the compression level (0-100, default 50%).
+Where input_file is the CBZ or CBR file to be processed and compression_percentage is an optional value indicating the compression level (0-100, default 50%).
 
 ## Contributing
 Contributions are always welcome! Please follow these steps to contribute to the project:
