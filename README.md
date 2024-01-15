@@ -70,7 +70,7 @@ This script was created for educational purposes and is not guaranteed for produ
 This project was created by Antonio Troise.
 
 ## Acknowledgements
-Special thanks to everyone who contributes to this project.
+Special thanks to [clach04](https://github.com/clach04) for providing sample CBZ and CBR files, which are available for download at  [clach04/sample_reading_media/releases](https://github.com/clach04/sample_reading_media/releases/). These sample files are incredibly helpful for anyone looking to test the functionalities of CBZ Resizer.
 
 ## Author
 Antonio Troise
