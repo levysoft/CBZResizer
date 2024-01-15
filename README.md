@@ -51,6 +51,9 @@ To use the script, run the command:
 
 Where input_file is the CBZ or CBR file to be processed and compression_percentage is an optional value indicating the compression level (0-100, default 50%).
 
+## Sample Files for Testing
+If you need sample CBZ or CBR files to test the CBZ Resizer script, you can download pre-built files from the following link: https://github.com/clach04/sample_reading_media/releases/. These files can be useful for testing the resizing and conversion functionalities of the script without the need to use large files
+
 ## Contributing
 Contributions are always welcome! Please follow these steps to contribute to the project:
 
