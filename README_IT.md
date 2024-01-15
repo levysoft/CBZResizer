@@ -55,8 +55,8 @@ Dove `input_file` è il file CBZ o CBR da comprimere e `compression_percentage` 
 ## File di Esempio per Test
 Se hai bisogno di file CBZ o CBR di esempio per testare lo script CBZ Resizer, puoi scaricare file pre-costruiti dal seguente link: https://github.com/clach04/sample_reading_media/releases/. Questi file possono essere utili per testare le funzionalità di ridimensionamento e conversione dello script senza la necessità di utilizzare file di grandi dimensioni.
 
-## Contributing
-Le contribuzioni sono sempre benvenute! Per contribuire al progetto, per favore segui questi passaggi:
+## Contributi
+I contributi sono sempre benvenuti! Per contribuire al progetto, per favore segui questi passaggi:
 
 1. Fork il repository.
 2. Crea un nuovo branch: `git checkout -b nome_branch`.
@@ -67,11 +67,11 @@ Le contribuzioni sono sempre benvenute! Per contribuire al progetto, per favore 
 ## Note
 Questo script è stato creato per scopi educativi e non è garantito per l'uso in produzione.
 
-## Credits
+## Crediti
 Questo progetto è stato creato da Antonio Troise.
 
-## Acknowledgements
-Ringraziamenti speciali a chiunque contribuisca a questo progetto.
+## Ringraziamenti
+Un ringraziamento speciale a [clach04](https://github.com/clach04) per aver fornito file di esempio CBZ e CBR, disponibili per il download su [clach04/sample_reading_media/releases](https://github.com/clach04/sample_reading_media/releases/). Questi file di esempio sono estremamente utili per chiunque desideri testare le funzionalità di CBZ Resizer.
 
 ## Autore
 Antonio Troise
