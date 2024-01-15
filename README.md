@@ -13,7 +13,7 @@ CBZ Resizer is a Python script developed to resize images within CBZ files. User
 ## Requirements
 - Python 3.x
 - PIL (Python Imaging Library), installable via `pip install Pillow`
-- rarfile, installable via pip install rarfile (needed for CBR support)
+- rarfile, installable via `pip install rarfile` (needed for CBR support)
 
 ## Installation
 To set up the development environment:
