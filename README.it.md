@@ -1,4 +1,7 @@
 # CBZ Resizer
+
+[ [English](README.md) | [Italiano](README.it.md) ]
+
 Script Python per ridimensionare efficientemente le immagini all'interno dei file CBZ con impostazioni di compressione personalizzabili, con supporto in sola lettura per i file CBR.
 
 ## Descrizione
